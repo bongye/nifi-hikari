@@ -70,6 +70,7 @@ public enum DBCPConfigUtil {
     List<PropertyDescriptor> properties = new ArrayList<>();
     properties.add(DATASOURCE_CLASSNAME);
     properties.add(USERNAME);
+    properties.add(PASSWORD);
     properties.add(AUTO_COMMIT);
     properties.add(METRICS);
     DBCPConfigUtil.properties = Collections.unmodifiableList(properties);
