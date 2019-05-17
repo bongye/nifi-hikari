@@ -29,3 +29,6 @@ target/
 
 ### VS Code ###
 .vscode/
+
+nifi-dbcp/derby.log
+nifi-dbcp/test

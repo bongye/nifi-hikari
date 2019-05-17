@@ -46,24 +46,24 @@ public class StandardHikariCPService extends AbstractControllerService implement
 
   @Override
   protected List<PropertyDescriptor> getSupportedPropertyDescriptors() {
-    return ConfigUtil.getProperties();
+    return DBCPConfigUtil.getProperties();
   }
 
   @Override
   protected PropertyDescriptor getSupportedDynamicPropertyDescriptor(
       String propertyDescriptorName) {
-    return ConfigUtil.getDynamicProperty(propertyDescriptorName);
+    return DBCPConfigUtil.getDynamicProperty(propertyDescriptorName);
   }
 
   @OnEnabled
   public void onEnabled(final ConfigurationContext context) throws InitializationException {
     HikariDataSource ds = new HikariDataSource();
 
-    final String dsClassName = context.getProperty(ConfigUtil.DATASOURCE_CLASSNAME).getValue();
-    final String userName = context.getProperty(ConfigUtil.USERNAME).getValue();
-    final String password = context.getProperty(ConfigUtil.PASSWORD).getValue();
-    final boolean autoCommit = context.getProperty(ConfigUtil.AUTO_COMMIT).asBoolean();
-    final boolean metrics = context.getProperty(ConfigUtil.METRICS).asBoolean();
+    final String dsClassName = context.getProperty(DBCPConfigUtil.DATASOURCE_CLASSNAME).getValue();
+    final String userName = context.getProperty(DBCPConfigUtil.USERNAME).getValue();
+    final String password = context.getProperty(DBCPConfigUtil.PASSWORD).getValue();
+    final boolean autoCommit = context.getProperty(DBCPConfigUtil.AUTO_COMMIT).asBoolean();
+    final boolean metrics = context.getProperty(DBCPConfigUtil.METRICS).asBoolean();
 
     ds.setDataSourceClassName(dsClassName);
     ds.setUsername(userName);

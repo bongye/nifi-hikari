@@ -11,7 +11,7 @@ public class DataSourcePropertyValidator implements Validator {
   @Override
   public ValidationResult validate(
       String propertyName, String propertyValue, ValidationContext context) {
-    String dsClassName = context.getProperty(ConfigUtil.DATASOURCE_CLASSNAME).getValue();
+    String dsClassName = context.getProperty(DBCPConfigUtil.DATASOURCE_CLASSNAME).getValue();
     return new ValidationResult.Builder()
         .subject(propertyName)
         .input(propertyValue)

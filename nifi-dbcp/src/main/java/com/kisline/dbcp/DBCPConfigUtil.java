@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public enum ConfigUtil {
+public enum DBCPConfigUtil {
   INSTANCE;
 
   private static List<PropertyDescriptor> properties;
@@ -28,7 +28,7 @@ public enum ConfigUtil {
           .displayName("Datasource classname")
           .description("Fully qualified classname of datasource")
           .required(true)
-          .allowableValues(ConfigUtil.dsClassNames)
+          .allowableValues(DBCPConfigUtil.dsClassNames)
           .addValidator(StandardValidators.NON_EMPTY_VALIDATOR)
           .build();
 
@@ -77,14 +77,14 @@ public enum ConfigUtil {
     List<AllowableValue> dsClassNames = new ArrayList<>();
     dsClassNames.add(DERBY_DS);
     dsClassNames.add(PGSQL_DS);
-    ConfigUtil.dsClassNames = dsClassNames.toArray(new AllowableValue[dsClassNames.size()]);
+    DBCPConfigUtil.dsClassNames = dsClassNames.toArray(new AllowableValue[dsClassNames.size()]);
 
     List<PropertyDescriptor> properties = new ArrayList<>();
     properties.add(DATASOURCE_CLASSNAME);
     properties.add(USERNAME);
     properties.add(AUTO_COMMIT);
     properties.add(METRICS);
-    ConfigUtil.properties = Collections.unmodifiableList(properties);
+    DBCPConfigUtil.properties = Collections.unmodifiableList(properties);
   }
 
   public static List<PropertyDescriptor> getProperties() {

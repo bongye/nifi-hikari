@@ -19,7 +19,12 @@ package com.kisline.dbcp;
 import org.apache.nifi.annotation.documentation.CapabilityDescription;
 import org.apache.nifi.annotation.documentation.Tags;
 import org.apache.nifi.dbcp.DBCPService;
+import org.apache.nifi.processor.exception.ProcessException;
+
+import java.sql.Connection;
 
 @Tags({"DBCP", "SQL", "Database", "HikariCP", "NICE"})
 @CapabilityDescription("Database connection pooling using HikariCP API")
-public interface HikariCPService extends DBCPService {}
+public interface HikariCPService extends DBCPService {
+  Connection getConnection() throws ProcessException;
+}

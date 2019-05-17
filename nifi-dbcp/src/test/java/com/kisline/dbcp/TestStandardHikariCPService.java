@@ -21,6 +21,7 @@ import org.apache.derby.jdbc.ClientDataSource;
 import org.apache.nifi.reporting.InitializationException;
 import org.apache.nifi.util.TestRunner;
 import org.apache.nifi.util.TestRunners;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,17 +37,23 @@ public class TestStandardHikariCPService {
     derby.start(new PrintWriter(System.out));
   }
 
+  @After
+  public void down() throws Exception {
+    derby.shutdown();
+  }
+
   @Test
   public void testService() throws InitializationException {
     final TestRunner runner = TestRunners.newTestRunner(TestProcessor.class);
     final StandardHikariCPService service = new StandardHikariCPService();
     runner.addControllerService("dbcp", service);
 
-    runner.setProperty(service, ConfigUtil.DATASOURCE_CLASSNAME, ClientDataSource.class.getName());
-    runner.setProperty(service, ConfigUtil.USERNAME, "test");
-    runner.setProperty(service, ConfigUtil.PASSWORD, "test");
-    runner.setProperty(service, ConfigUtil.AUTO_COMMIT, "true");
-    runner.setProperty(service, ConfigUtil.METRICS, "true");
+    runner.setProperty(
+        service, DBCPConfigUtil.DATASOURCE_CLASSNAME, ClientDataSource.class.getName());
+    runner.setProperty(service, DBCPConfigUtil.USERNAME, "test");
+    runner.setProperty(service, DBCPConfigUtil.PASSWORD, "test");
+    runner.setProperty(service, DBCPConfigUtil.AUTO_COMMIT, "true");
+    runner.setProperty(service, DBCPConfigUtil.METRICS, "true");
 
     runner.setProperty(service, "databaseName", "test");
     runner.setProperty(service, "createDatabase", "create");
