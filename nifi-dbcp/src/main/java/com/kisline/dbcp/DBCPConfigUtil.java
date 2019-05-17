@@ -14,13 +14,6 @@ public enum DBCPConfigUtil {
   INSTANCE;
 
   private static List<PropertyDescriptor> properties;
-  private static AllowableValue[] dsClassNames;
-
-  private static final AllowableValue DERBY_DS =
-      new AllowableValue(
-          ClientDataSource.class.getName(), "Apache Derby", "Apache Derby Datasource");
-  private static final AllowableValue PGSQL_DS =
-      new AllowableValue(PGSimpleDataSource.class.getName(), "PostgreSQL", "PostgreSQL Datasource");
 
   public static final PropertyDescriptor DATASOURCE_CLASSNAME =
       new PropertyDescriptor.Builder()
@@ -28,7 +21,7 @@ public enum DBCPConfigUtil {
           .displayName("Datasource classname")
           .description("Fully qualified classname of datasource")
           .required(true)
-          .allowableValues(DBCPConfigUtil.dsClassNames)
+          .allowableValues(getAllowableValues())
           .addValidator(StandardValidators.NON_EMPTY_VALIDATOR)
           .build();
 
@@ -74,11 +67,6 @@ public enum DBCPConfigUtil {
           .build();
 
   static {
-    List<AllowableValue> dsClassNames = new ArrayList<>();
-    dsClassNames.add(DERBY_DS);
-    dsClassNames.add(PGSQL_DS);
-    DBCPConfigUtil.dsClassNames = dsClassNames.toArray(new AllowableValue[dsClassNames.size()]);
-
     List<PropertyDescriptor> properties = new ArrayList<>();
     properties.add(DATASOURCE_CLASSNAME);
     properties.add(USERNAME);
@@ -98,5 +86,19 @@ public enum DBCPConfigUtil {
         .addValidator(new DataSourcePropertyValidator())
         .dynamic(true)
         .build();
+  }
+
+  private static AllowableValue[] getAllowableValues() {
+    List<AllowableValue> values = new ArrayList<>();
+    AllowableValue DERBY_DS =
+        new AllowableValue(
+            ClientDataSource.class.getName(), "Apache Derby", "Apache Derby Datasource");
+    AllowableValue PGSQL_DS =
+        new AllowableValue(
+            PGSimpleDataSource.class.getName(), "PostgreSQL", "PostgreSQL Datasource");
+
+    values.add(DERBY_DS);
+    values.add(PGSQL_DS);
+    return values.toArray(new AllowableValue[values.size()]);
   }
 }
